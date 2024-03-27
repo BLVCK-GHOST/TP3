@@ -7,7 +7,7 @@ import logging
 import os
 import glob
 
-def remove_data(df: pd.DataFrame, last_n_samples: int = 4*24):
+def remove_data(df: pd.DataFrame, last_n_samples: int = 4*3):
     return df.iloc[:-last_n_samples]
 
 logging.basicConfig(level=logging.INFO)
