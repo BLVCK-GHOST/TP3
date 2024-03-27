@@ -7,7 +7,8 @@ import logging
 import os
 import glob
 
-def remove_data(df: pd.DataFrame, last_n_samples: int = 4*3):    # df: pd.DataFrame = pd.read_csv(fic_export_data)    return df.iloc[:-last_n_samples]    # df.to_csv(fic_export_data, index=False)
+def remove_data(df: pd.DataFrame, last_n_samples: int = 4*3):
+    return df.iloc[:-last_n_samples]
 
 logging.basicConfig(level=logging.INFO)
 
@@ -34,7 +35,7 @@ def load_data(lag_days: int):
     return data
 
 df = load_data(LAG_N_DAYS)
-df = remove_data(df,last_n_samples=4*24)
+df = remove_data(df, last_n_samples=4*24)
 
 st.subheader("Line Chart of Numerical Data Over Time")
 numerical_column = col_donnees
@@ -56,4 +57,4 @@ df['DayOfWeek'] = df['DayOfWeek'].map(day_mapping)
 daily_avg_consumption = round(df.groupby(df[col_date].dt.date)[col_donnees].sum().mean())
 
 st.subheader("Consommation moyenne par jour")
-st.write(f"La consommation moyenne par jour est de: {daily_avg_consumption}")
+st.write("La consommation moyenne par jour est de:", daily_avg_consumption)
