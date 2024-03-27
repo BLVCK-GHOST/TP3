@@ -37,8 +37,6 @@ def load_data(lag_days: int):
 df = load_data(LAG_N_DAYS)
 df = remove_data(df, last_n_samples=4*24)
 
-latest_date = df.iloc[-1][col_date]  # Getting the latest date from the DataFrame
-
 st.subheader("Line Chart of Numerical Data Over Time")
 numerical_column = col_donnees
 
@@ -71,5 +69,6 @@ st.subheader("Number of Lines Lost between March 26th and March 27th")
 st.write(f"The number of lines lost between {start_date} and {end_date} is: {num_lines_lost}")
 
 # Displaying the latest date
+latest_date = df.iloc[-1][col_date]  # Getting the latest date from the DataFrame
 st.subheader("Latest Date in the Dataset")
 st.write(f"The latest date in the dataset is: {latest_date}")
