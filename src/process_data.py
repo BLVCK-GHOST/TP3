@@ -7,7 +7,7 @@ import glob
 from pathlib import Path
 import json
 
-col_date: str = "date_heure"
+col_date: str = "date_time"
 col_donnees: str = "consommation"
 cols: List[str] = [col_date, col_donnees]
 fic_export_data: str = "data/interim/data.csv"
