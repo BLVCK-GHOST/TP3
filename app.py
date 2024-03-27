@@ -54,22 +54,16 @@ df['DayOfWeek'] = df[col_date].dt.dayofweek
 day_mapping = {0: 'Lundi', 1: 'Mardi', 2: 'Mercredi', 3: 'Jeudi', 4: 'Vendredi', 5: 'Samedi', 6: 'Dimanche'}
 df['DayOfWeek'] = df['DayOfWeek'].map(day_mapping)
 
-# Filter rows between March 26th at 22:45 and March 27th at 15:00
-start_time = '2024-03-26 22:45:00'
-end_time = '2024-03-27 15:00:00'
-filtered_df = df[(df[col_date] >= start_time) & (df[col_date] <= end_time)]
+daily_avg_consumption = round(df.groupby(df[col_date].dt.date)[col_donnees].sum().mean())
 
-# Calculate the number of rows lost
-total_rows = len(df)
-rows_within_range = len(filtered_df)
-rows_lost = total_rows - rows_within_range
+st.subheader("Consommation moyenne par jour")
+st.write("La consommation moyenne par jour est de:", daily_avg_consumption)
 
-# Display the result in a table
-result_df = pd.DataFrame({
-    'Total Rows': [total_rows],
-    'Rows Within Range': [rows_within_range],
-    'Rows Lost': [rows_lost]
-})
+# Adding table for number of lines lost between March 26th and March 27th
+start_date = "2024-03-26"
+end_date = "2024-03-27"
+filtered_df = df[(df[col_date] >= start_date) & (df[col_date] <= end_date)]
+num_lines_lost = len(df) - len(filtered_df)
 
-st.subheader("Number of Rows Lost Between March 26th at 22:45 and March 27th at 15:00")
-st.write(result_df)
+st.subheader("Number of Lines Lost between March 26th and March 27th")
+st.write(f"The number of lines lost between {start_date} and {end_date} is: {num_lines_lost}")
