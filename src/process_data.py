@@ -23,13 +23,14 @@ def load_data():
             list_df.append(df)
 
     df: pd.DataFrame = pd.concat(list_df, ignore_index=True)
+    
+    # Print out column names to verify
+    print("Column names:", df.columns)
+    
     return df
 
 
 def format_data(df: pd.DataFrame):
-    # Print out column names to verify
-    print("Column names:", df.columns)
-    
     # typage
     df[col_date] = pd.to_datetime(df[col_date])
     # ordre
