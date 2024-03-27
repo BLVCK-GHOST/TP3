@@ -45,4 +45,5 @@ average_consumption_per_hour = calculate_average_consumption_per_hour(df)
 
 # Display the calculated average consumption per hour
 st.subheader("Average Consumption Per Hour of the Day")
-st.write(average_consumption_per_hour)
+fig_avg_consumption_per_hour = px.bar(average_consumption_per_hour, x=average_consumption_per_hour.index, y=average_consumption_per_hour.values, labels={'x':'Hour', 'y':'Average Consumption'})
+st.plotly_chart(fig_avg_consumption_per_hour)
