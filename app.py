@@ -50,7 +50,7 @@ df['DayOfWeek'] = df[col_date].dt.dayofweek
 day_mapping = {0: 'Lundi', 1: 'Mardi', 2: 'Mercredi', 3: 'Jeudi', 4: 'Vendredi', 5: 'Samedi', 6: 'Dimanche'}
 df['DayOfWeek'] = df['DayOfWeek'].map(day_mapping)
 
-daily_avg_consumption = df.groupby(df[col_date].dt.date)[col_donnees].sum().mean()
+daily_avg_consumption = round(df.groupby(df[col_date].dt.date)[col_donnees].sum().mean())
 
 st.subheader("Consommation moyenne par jour")
 st.write(f"La consommation moyenne par jour est de: {daily_avg_consumption}")
