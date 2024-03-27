@@ -7,7 +7,7 @@ import glob
 from pathlib import Path
 import json
 
-col_date: str = "date_time"
+col_date: str = "date_time"  # Update the column name if necessary
 col_donnees: str = "consommation"
 cols: List[str] = [col_date, col_donnees]
 fic_export_data: str = "data/interim/data.csv"
@@ -27,6 +27,9 @@ def load_data():
 
 
 def format_data(df: pd.DataFrame):
+    # Print out column names to verify
+    print("Column names:", df.columns)
+    
     # typage
     df[col_date] = pd.to_datetime(df[col_date])
     # ordre
