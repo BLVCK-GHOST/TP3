@@ -54,7 +54,22 @@ df['DayOfWeek'] = df[col_date].dt.dayofweek
 day_mapping = {0: 'Lundi', 1: 'Mardi', 2: 'Mercredi', 3: 'Jeudi', 4: 'Vendredi', 5: 'Samedi', 6: 'Dimanche'}
 df['DayOfWeek'] = df['DayOfWeek'].map(day_mapping)
 
-daily_avg_consumption = round(df.groupby(df[col_date].dt.date)[col_donnees].sum().mean())
+# Filter rows between March 26th at 22:45 and March 27th at 15:00
+start_time = '2024-03-26 22:45:00'
+end_time = '2024-03-27 15:00:00'
+filtered_df = df[(df[col_date] >= start_time) & (df[col_date] <= end_time)]
 
-st.subheader("Consommation moyenne par jour")
-st.write("La consommation moyenne par jour est de:", daily_avg_consumption)
+# Calculate the number of rows lost
+total_rows = len(df)
+rows_within_range = len(filtered_df)
+rows_lost = total_rows - rows_within_range
+
+# Display the result in a table
+result_df = pd.DataFrame({
+    'Total Rows': [total_rows],
+    'Rows Within Range': [rows_within_range],
+    'Rows Lost': [rows_lost]
+})
+
+st.subheader("Number of Rows Lost Between March 26th at 22:45 and March 27th at 15:00")
+st.write(result_df)
