@@ -79,3 +79,20 @@ hourly_avg_consumption = df.groupby('Hour')[col_donnees].mean().reset_index()
 st.subheader("Moyenne de la consommation par heure de la journée")
 fig_hourly_avg = px.bar(hourly_avg_consumption, x='Hour', y=col_donnees, title="Moyenne de la consommation par heure de la journée")
 st.plotly_chart(fig_hourly_avg)
+ 
+ 
+# Ajouter une colonne pour le jour de la semaine
+df['DayOfWeek'] = df[col_date].dt.dayofweek
+ 
+# Mapper les numéros de jour de la semaine à des noms de jour
+day_mapping = {0: 'Lundi', 1: 'Mardi', 2: 'Mercredi', 3: 'Jeudi', 4: 'Vendredi', 5: 'Samedi', 6: 'Dimanche'}
+df['DayOfWeek'] = df['DayOfWeek'].map(day_mapping)
+ 
+# Grouper les données par jour de la semaine et calculer la moyenne de la consommation
+daily_avg_consumption = df.groupby('DayOfWeek')[col_donnees].mean().reset_index()
+ 
+# Afficher le diagramme de la consommation moyenne par jour de la semaine
+st.subheader("Consommation moyenne par jour de la semaine")
+fig_daily_avg = px.bar(daily_avg_consumption, x='DayOfWeek', y=col_donnees, title="Consommation moyenne par jour de la semaine")
+st.plotly_chart(fig_daily_avg)
+ 
