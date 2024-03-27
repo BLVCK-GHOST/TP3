@@ -1,3 +1,5 @@
+# process_data.py
+
 import pandas as pd
 from typing import List
 import os
@@ -15,7 +17,6 @@ def load_data():
     list_fic: list[str] = [Path(e) for e in glob.glob("data/raw/*json")]
     list_df: list[pd.DataFrame] = []
     for p in list_fic:
-        # list_df.append(pd.read_json(p))
         with open(p, "r") as f:
             dict_data: dict = json.load(f)
             df: pd.DataFrame = pd.DataFrame.from_dict(dict_data.get("results"))
@@ -42,6 +43,16 @@ def export_data(df: pd.DataFrame):
     df.to_csv(fic_export_data, index=False)
 
 
+def calculate_average_consumption_per_hour(df: pd.DataFrame):
+    # Extract hour from the date column
+    df['Hour'] = df[col_date].dt.hour
+    
+    # Group by hour and calculate the mean consumption for each hour
+    average_consumption_per_hour = df.groupby('Hour')[col_donnees].mean()
+    
+    return average_consumption_per_hour
+
+
 def main_process():
     df: pd.DataFrame = load_data()
     df = format_data(df)
@@ -49,6 +60,4 @@ def main_process():
 
 
 if __name__ == "__main__":
-
-    # data_file: str = "data/raw/eco2mix-regional-tr.csv"
     main_process()
